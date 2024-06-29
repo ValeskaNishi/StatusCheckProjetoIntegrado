@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import TelaInicial from './componentes/telaInicial';
+import TelaTreinamentos from './componentes/telaTreinamentos';
+import TelaBemVindo from './componentes/telaBemVindo';
+import TelaColabCadastrados from './componentes/telaColabCadastrados';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+      <Route path="/treinocheck" element={<TelaBemVindo />} />
+        <Route path="/colaborador" element={<TelaInicial />} />
+        <Route path="/treinamentos" element={<TelaTreinamentos />} />
+        <Route path="/cadastrocolab" element={<TelaColabCadastrados />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
+
