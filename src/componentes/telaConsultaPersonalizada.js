@@ -1,18 +1,31 @@
-// src/components/TelaConsultaPersonalizada.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f5f5f5;
+  padding: 0px;
+  overflow-y: auto;
+`;
+
 const SearchOptions = styled.div`
-  background-color: #c8bfe7;
+  background-color: rgb(97, 109, 248);
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
 `;
 
 const OptionTitle = styled.div`
-  background-color: #0073e6;
+  background-color: #2f227a;
   color: white;
   padding: 5px;
   border-radius: 5px;
@@ -21,6 +34,7 @@ const OptionTitle = styled.div`
 `;
 
 const OptionRow = styled.div`
+  color: white;
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -44,12 +58,14 @@ const SmallSearchButton = styled.button`
   align-items: center;
 
   svg {
-    color: #0073e6;
+    color: #000000;
   }
 `;
 
 const ResultsContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 0px;
+  width: 100%;
+  max-width: 600px;
 `;
 
 const ResultList = styled.ul`
@@ -89,9 +105,9 @@ const TelaConsultaPersonalizada = () => {
 
   const handleSearchByName = async () => {
     try {
-      const response = await axios.get('/treinamentos-colaborador/get');
+      const response = await axios.get('http://localhost:3030/treinamentos-colaborador/get');
       const filtered = response.data.filter(colaborador =>
-        colaborador.nome.toLowerCase().includes(searchText.toLowerCase())
+        colaborador.nome && colaborador.nome.toLowerCase().includes(searchText.toLowerCase())
       );
       setFilteredColaboradores(filtered);
     } catch (error) {
@@ -101,7 +117,7 @@ const TelaConsultaPersonalizada = () => {
 
   const handleSearchByMatricula = async () => {
     try {
-      const response = await axios.get('/treinamentos-colaborador/get');
+      const response = await axios.get('http://localhost:3030/treinamentos-colaborador/get');
       const filtered = response.data.filter(colaborador =>
         colaborador.matricula.toString().includes(matricula)
       );
@@ -124,7 +140,7 @@ const TelaConsultaPersonalizada = () => {
   };
 
   return (
-    <>
+    <Container>
       <SearchOptions>
         <OptionTitle>Opções de consulta</OptionTitle>
         <OptionRow>
@@ -133,7 +149,7 @@ const TelaConsultaPersonalizada = () => {
             type="text"
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
-            onKeyDown={handleKeyDownName}  // Adiciona o evento onKeyDown para o nome
+            onKeyDown={handleKeyDownName}
           />
           <SmallSearchButton onClick={handleSearchByName}>
             <FaSearch />
@@ -145,7 +161,7 @@ const TelaConsultaPersonalizada = () => {
             type="text"
             value={matricula}
             onChange={e => setMatricula(e.target.value)}
-            onKeyDown={handleKeyDownMatricula}  // Adiciona o evento onKeyDown para a matrícula
+            onKeyDown={handleKeyDownMatricula}
           />
           <SmallSearchButton onClick={handleSearchByMatricula}>
             <FaSearch />
@@ -161,7 +177,7 @@ const TelaConsultaPersonalizada = () => {
           ))}
         </ResultList>
       </ResultsContainer>
-    </>
+    </Container>
   );
 };
 

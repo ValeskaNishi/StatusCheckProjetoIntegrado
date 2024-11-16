@@ -1,9 +1,8 @@
-// src/components/TelaTreinamentos.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaThList, FaUsers, FaChartPie, FaUserCog } from 'react-icons/fa'; // Importa novos ícones
+import { FaUserShield, FaSearch, FaThList, FaUsers, FaChartPie, FaUserCog } from 'react-icons/fa';
 import ImagemMascote from '../img/logomoderna.png';
 
 const Container = styled.div`
@@ -56,32 +55,6 @@ const NavItem = styled(Link)`
   }
 `;
 
-const Title = styled.h2`
-  color: #000000;
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
-const TrainingList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-`;
-
-const TrainingItem = styled.li`
-  background: #fff;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px;
-`;
-
-const TrainingTitle = styled.h3`
-  color: #333;
-  margin: 0;
-  margin-bottom: 10px;
-`;
-
 const LogoLink = styled(Link)`
   color: white;
   text-decoration: none;
@@ -93,23 +66,39 @@ const LogoLink = styled(Link)`
   }
 `;
 
-const TelaTreinamentos = () => {
-  const [trainings, setTrainings] = useState([]);
+const Title = styled.h2`
+  color: #000000;
+  text-align: center;
+  margin-bottom: 20px;
+`;
 
-  useEffect(() => {
-    const fetchTrainings = async () => {
-      try {
-        const response = await axios.get('http://localhost:3030/treinamentos/get');
-        console.log('Data received from endpoint:', response.data);
-        setTrainings(response.data);
-      } catch (error) {
-        console.error('Error fetching trainings:', error);
-      }
-    };
+const AdminOption = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 16px;
 
-    fetchTrainings();
-  }, []);
+  a {
+    color: #1c1c28;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
 
+    &:hover {
+      text-decoration: underline;
+    }
+
+    svg {
+      margin-left: 5px;
+    }
+  }
+`;
+
+const TelaCadastroUsuario = () => {
   return (
     <Container>
       <Header>
@@ -126,17 +115,26 @@ const TelaTreinamentos = () => {
         </Nav>
       </Header>
       <Content>
-        <Title>Lista de Treinamentos</Title>
-        <TrainingList>
-          {trainings.map(training => (
-            <TrainingItem key={training.id}>
-              <TrainingTitle>ID: {training.id} - Nome do Treinamento Cadastrado: {training.treinamento}</TrainingTitle>
-            </TrainingItem>
-          ))}
-        </TrainingList>
+        <Title>Acesso Gerencial StatusCheck</Title>
+        <AdminOption>
+          <span>
+          Para realizar tarefas, como:<br />
+           <br />
+          - Gerenciamento de Usuários;<br />
+          - Gerenciamento de Tabelas de Treinamentos;<br />
+          - Gerenciamento de Perfil e troca de senha.<br />
+           <br />
+          Clique no link abaixo para ser direcionado(a) à Plataforma Gerencial da StatusCheck.<br />
+          Lembre-se de ter suas credenciais em mãos para realizar o acesso.
+          </span>
+          <a href="http://localhost:3030/admin/login" target="_blank" rel="noopener noreferrer">
+            Clique Aqui
+            <FaUserShield />
+          </a>
+        </AdminOption>
       </Content>
     </Container>
   );
 };
 
-export default TelaTreinamentos;
+export default TelaCadastroUsuario;

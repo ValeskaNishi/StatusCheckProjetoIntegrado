@@ -1,20 +1,21 @@
-// src/components/TelaColabCadastrados.js
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaThList, FaUser } from 'react-icons/fa';
-import ImagemMascote from '../img/mascoteHd.png';
+import { FaSearch, FaThList, FaUsers, FaChartPie, FaUserCog } from 'react-icons/fa'; // Importa novos ícones
+import ImagemMascote from '../img/logomoderna.png';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100vw;
   background-color: #f5f5f5;
+  overflow: hidden;
 `;
 
 const Header = styled.header`
-  background-color: #0073e6;
+  background-color: #1c1c28;
   color: white;
   padding: 10px 20px;
   display: flex;
@@ -62,19 +63,35 @@ const NavItem = styled(Link)`
 const Content = styled.div`
   flex: 1;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: #f5f5f5;
+  overflow-y: auto;
 `;
 
 const Title = styled.h2`
-  color: #0073e6;
+  color: #000000;
   text-align: center;
   margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  background-color: #f5f5f5;
+  padding: 10px;
+  z-index: 1;
 `;
 
 const SearchContainer = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  position: sticky;
+  top: 50px;
+  background-color: #f5f5f5;
+  padding: 10px;
+  z-index: 1;
 `;
 
 const SearchInput = styled.input`
@@ -82,21 +99,33 @@ const SearchInput = styled.input`
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  margin-right: 8px;
+`;
+
+const SearchButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 `;
 
 const TableContainer = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
 `;
 
 const Table = styled.table`
   width: 80%;
+  max-width: 1000px;
+  min-height: 400px;
   border-collapse: collapse;
   background-color: white;
 `;
 
 const TableHead = styled.thead`
-  background-color: #0073e6;
+  background-color: rgb(97, 109, 248);
   color: white;
 `;
 
@@ -105,6 +134,7 @@ const TableRow = styled.tr``;
 const TableHeader = styled.th`
   padding: 10px;
   border: 1px solid #ddd;
+  min-width: 150px;
 `;
 
 const TableBody = styled.tbody``;
@@ -112,6 +142,7 @@ const TableBody = styled.tbody``;
 const TableCell = styled.td`
   padding: 10px;
   border: 1px solid #ddd;
+  min-width: 150px;
 `;
 
 const StatusText = styled.span`
@@ -138,41 +169,66 @@ const TelaColabCadastrados = () => {
   useEffect(() => {
     const fetchColaboradores = async () => {
       try {
-        const response = await axios.get('/treinamentos-colaborador/get');
-        setColaboradores(response.data);
-        setFilteredColaboradores(response.data);
+        const [colabResponse, treinamentosResponse] = await Promise.all([
+          axios.get('http://localhost:3030/colaborador/get'),
+          axios.get('http://localhost:3030/treinamentos-colaborador/get')
+        ]);
+
+        const colaboradoresData = colabResponse.data;
+        const treinamentosData = treinamentosResponse.data;
+
+        const combinedData = treinamentosData.map(treinamento => {
+          const colaborador = colaboradoresData.find(
+            colab => colab.matricula === treinamento.matricula
+          );
+          return {
+            ...treinamento,
+            nome: colaborador ? colaborador.nome : 'N/A'
+          };
+        });
+
+        setColaboradores(combinedData);
+        setFilteredColaboradores(combinedData);
       } catch (error) {
-        console.error('Error fetching colaboradores:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
     fetchColaboradores();
   }, []);
 
-  useEffect(() => {
+  const handleSearch = () => {
     const filtered = colaboradores.filter(colaborador =>
-      colaborador.nome.toLowerCase().includes(searchText.toLowerCase())
+      colaborador.matricula && colaborador.matricula.toString().includes(searchText)
     );
     setFilteredColaboradores(filtered);
-  }, [searchText, colaboradores]);
+  };
 
   const handleSearchInputChange = (e) => {
     setSearchText(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
     <Container>
       <Header>
         <Logo>
-          <LogoLink to="/treinocheck">
+          <LogoLink to="/statuscheck">
             <img src={ImagemMascote} alt="Treino Check" height="60" />
-            <h1>TreinoCheck</h1>
+            <h1>StatusCheck</h1>
           </LogoLink>
         </Logo>
         <Nav>
-          <NavItem to="/pesquisa-colaborador"><FaSearch /> Pesquisa Colaborador</NavItem>
+          <NavItem to="/colaborador"><FaSearch /> Pesquisa Colaborador</NavItem>
           <NavItem to="/treinamentos"><FaThList /> Treinamentos</NavItem>
-          <NavItem to="/cadastrocolab"><FaUser /> Colaboradores Cadastrados</NavItem>
+          <NavItem to="/treinamentos-colaborador"><FaUsers /> Colaboradores Cadastrados</NavItem>
+          <NavItem to="/dashboard"><FaChartPie /> Dashboard</NavItem>
+          <NavItem to="/acessogerencial"><FaUserCog /> Acesso Gerencial</NavItem>
         </Nav>
       </Header>
       <Content>
@@ -180,28 +236,36 @@ const TelaColabCadastrados = () => {
         <SearchContainer>
           <SearchInput
             type="text"
-            placeholder="Pesquisar colaborador"
+            placeholder="Matrícula colaborador"
             value={searchText}
             onChange={handleSearchInputChange}
+            onKeyDown={handleKeyDown} // Adiciona o evento para capturar a tecla Enter
           />
+          <SearchButton onClick={handleSearch}>
+            <FaSearch size={20} color="#1c1c28" />
+          </SearchButton>
         </SearchContainer>
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeader>Matrícula</TableHeader>
                 <TableHeader>Nome</TableHeader>
+                <TableHeader>Matrícula</TableHeader>
                 <TableHeader>Treinamento</TableHeader>
                 <TableHeader>Status</TableHeader>
+                <TableHeader>Início</TableHeader>
+                <TableHeader>Fim</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredColaboradores.map(colaborador => (
-                <TableRow key={`${colaborador.matricula}-${colaborador.treinamento}`}>
-                  <TableCell>{colaborador.matricula}</TableCell>
+              {filteredColaboradores.map((colaborador, index) => (
+                <TableRow key={`${colaborador.matricula}-${index}`}>
                   <TableCell>{colaborador.nome}</TableCell>
+                  <TableCell>{colaborador.matricula}</TableCell>
                   <TableCell>{colaborador.treinamento}</TableCell>
                   <TableCell><StatusText status={colaborador.status}>{colaborador.status}</StatusText></TableCell>
+                  <TableCell>{colaborador.inicio}</TableCell>
+                  <TableCell>{colaborador.termino}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

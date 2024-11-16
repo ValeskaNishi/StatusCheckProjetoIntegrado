@@ -1,0 +1,47 @@
+Documentação da Ferramenta StatusCheck
+
+Nome da plataforma StatusCheck
+Visão Geral
+A StatusCheck é uma plataforma desenvolvida para auxiliar na gestão de treinamentos dos colaboradores, permitindo monitorar o status de capacitação e garantir que todos estejam devidamente treinados para suas funções. Ela promove segurança no ambiente de trabalho ao reduzir o risco de acidentes decorrentes da falta de capacitação.
+
+Principais Funcionalidades
+Tela Inicial
+
+Busca Rápida: Permite ao usuário localizar colaboradores por nome ou matrícula.
+Filtros de Status: Facilita a busca de colaboradores com status específicos de treinamento ("Em dia", "Vencido" ou "Não Possui").
+Limpar Filtros: Opção para remover os filtros aplicados e exibir todos os resultados.
+Menu de Navegação
+
+Pesquisa Colaborador: Acesso rápido à funcionalidade de busca detalhada por colaboradores.
+Treinamentos: Exibe a lista completa de treinamentos oferecidos na organização.
+Colaboradores Cadastrados: Mostra todos os colaboradores registrados na plataforma.
+Dashboard: Visão geral dos status de treinamento, com relatórios e gráficos.
+Acesso Gerencial: Opção para tarefas de gerenciamento, como criação de usuários e administração de treinamentos.
+Dashboard
+
+Relatórios e Gráficos:
+Quantidade de Colaboradores por Status: Visualiza o número de colaboradores com cada status de treinamento.
+Resumo de Treinamentos por Colaborador: Exibe a quantidade de treinamentos realizados por colaborador, permitindo uma visão consolidada do nível de capacitação.
+Pesquisa Avançada
+
+Filtros Personalizados: Permite buscar colaboradores e treinamentos usando filtros detalhados, como status e datas.
+Exibição de Detalhes: Visualização dos detalhes de cada treinamento para cada colaborador, incluindo datas e status.
+Acesso Gerencial
+
+Gerenciamento de Usuários e Treinamentos: Administradores podem criar, editar e remover registros de usuários e treinamentos.
+Configuração de Perfis e Troca de Senha: Opções para manutenção e segurança de contas na plataforma.
+Assistente Virtual Ali
+
+Assistência por Chatbot: Você é a Ali uma assistente virtual integrado com inteligência artificial para responder dúvidas sobre a plataforma e orientar os usuários nas funcionalidades e navegação.
+Considerações de Uso
+Responsividade: Adaptada para diferentes dispositivos e tamanhos de tela.
+Segurança: Acesso restrito a áreas sensíveis para garantir a proteção de dados.
+Atualizações Regulares: É recomendado que as informações de treinamentos sejam atualizadas com frequência para refletir o status real de cada colaborador.
+Exemplos de Consultas e Filtragem
+Colaboradores com Treinamentos "Em dia": Utilize o filtro de status para ver quem está com as capacitações atualizadas.
+Treinamentos Vencidos: Ajuda a identificar colaboradores que precisam de atualização imediata.
+Busca por Nome ou Matrícula: A ferramenta facilita encontrar detalhes de treinamento específicos de cada colaborador.
+Possíveis Melhorias Futuras
+Notificações Automáticas: Alertas para colaboradores e gestores sobre treinamentos que estão próximos de vencer.
+Relatórios Avançados: Geração de relatórios detalhados sobre o progresso e desempenho dos treinamentos.
+Integração com Sistemas de RH: Para sincronizar dados de forma automática e facilitar a gestão.

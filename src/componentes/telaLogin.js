@@ -1,76 +1,67 @@
-import React from 'react';
-import styled from 'styled-components';
-import ImagemMascote from '../img/mascoteHd.png'; // Importe a imagem local ou use uma URL externa
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from 'axios';
+import './telaLogin.css';
+import logo from '../img/logomoderna.png';
+import { useNavigate } from 'react-router-dom';
 
-const Container = styled.div`
-  display: flex;
-  height: 100vh;
-  background-color:#1E80B9;
-`;
 
-const ImageContainer = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+function TelaLogin() {
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate(); // Hook para navegação
 
-const StyledImage = styled.img`
-  max-width: 66%;
-  height: auto;
-`;
 
-const LoginBox = styled.div`
-  background-color: #ffffff;
-  padding: 50px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 310px;
-  text-align: center;
-  margin: auto 325px auto auto; *//////*largura da imagem///////*
-`;
+    // Função para realizar login
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:3031/login', {
+                register: login,
+                password: password
+            },
+        {
+            withCredentials: true
+        }
+        );
+        setMessage(response.data.message);
 
-const Title = styled.h2`
-  margin-bottom: 30px;
-  color: #333333;
-`;
+        if (response.data.message === 'Usuário autenticado.') { // Ajuste conforme a resposta do servidor
+            navigate('/colaborador'); // Redireciona para /colaborador após o login
+        }
+        
+        } catch (error) {
+            setMessage(error.response ? error.response.data.message : 'Erro na conexão.');
+        }
+    };
 
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #cccccc;
-  border-radius: 5px;
-`;
+    return (
+        <div className="login-container">
+            <div className="login-box">
+                <img src={logo} alt="StatusCheck Logo" className="logo" />
+                <h2 className="login-title">StatusCheck</h2>
+                <h3 className="login-title2">Insira suas credenciais para acessar a plataforma</h3>
+                <form onSubmit={handleLogin}>
+                    <input
+                        type="text"
+                        placeholder="Login"
+                        className="login-input"
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Senha"
+                        className="login-input"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button type="submit" className="login-button">Entrar</button>
+                </form>
+                {message && <p className="message">{message}</p>}
+            </div>
+        </div>
+    );
+}
 
-const Button = styled.button`
-  width: 107%;
-  padding: 10px;
-  background-color: #000000;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-`;
-
-const Login = () => {
-  return (
-    <Container>
-      <ImageContainer>
-        <StyledImage src={ImagemMascote} alt="ImagemMascoteT" />
-      </ImageContainer>
-      <LoginBox>
-        <Title>TreinoCheck</Title>
-        <form>
-          <Input type="email" placeholder="Email" required />
-          <Input type="password" placeholder="Senha" required />
-          <Button type="submit">Entrar</Button>
-        </form>
-      </LoginBox>
-    </Container>
-  );
-};
-
-export default Login;
+export default TelaLogin;
