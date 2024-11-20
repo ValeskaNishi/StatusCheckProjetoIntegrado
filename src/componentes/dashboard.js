@@ -7,7 +7,6 @@ import { FaSearch, FaThList, FaChartBar, FaUserCog, FaUsers } from 'react-icons/
 import { Link } from 'react-router-dom';
 import ImagemMascote from '../img/logomoderna.png';
 
-// Registre os componentes do Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
 const Container = styled.div`
@@ -151,7 +150,7 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  // Relatório 1: Quantidade de Colaboradores por Status de Treinamento
+  // Quantidade de Colaboradores por Status de Treinamento
   const statusReport = statusList.map(status => ({
     status: status.status,
     quantidade: treinamentosColaborador.filter(treino => treino.status === status.status).length,

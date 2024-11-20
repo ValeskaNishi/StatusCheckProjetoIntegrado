@@ -161,7 +161,7 @@ const ChatBotPopup = () => {
             <ChatInput
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown} // Envia a mensagem ao pressionar Enter
+              onKeyDown={handleKeyDown} 
               placeholder="Digite sua mensagem..."
             />
             <SendButton onClick={sendMessage}>Enviar</SendButton>

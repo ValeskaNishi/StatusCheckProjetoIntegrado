@@ -4,7 +4,7 @@ import { FaSearch, FaThList, FaSpinner, FaChartPie, FaUserCog, FaUsers } from 'r
 import axios from 'axios';
 import ImagemMascote from '../img/logomoderna.png'; 
 import { Link } from 'react-router-dom';
-import ChatBotPopup from './chatBotPopup'; // Importe o ChatBotPopup
+import ChatBotPopup from './chatBotPopup'; 
 
 const Container = styled.div`
   display: flex;
@@ -61,7 +61,6 @@ const NavItem = styled(Link)`
   }
 `;
 
-// Definindo os componentes estilizados ausentes
 const SearchInput = styled.input`
   flex: 1;
   padding: 12px 16px;

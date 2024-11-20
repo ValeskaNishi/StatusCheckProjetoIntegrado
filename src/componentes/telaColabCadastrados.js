@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaThList, FaUsers, FaChartPie, FaUserCog } from 'react-icons/fa'; // Importa novos ícones
+import { FaSearch, FaThList, FaUsers, FaChartPie, FaUserCog } from 'react-icons/fa'; 
 import ImagemMascote from '../img/logomoderna.png';
 
 const Container = styled.div`
@@ -239,7 +239,7 @@ const TelaColabCadastrados = () => {
             placeholder="Matrícula colaborador"
             value={searchText}
             onChange={handleSearchInputChange}
-            onKeyDown={handleKeyDown} // Adiciona o evento para capturar a tecla Enter
+            onKeyDown={handleKeyDown} 
           />
           <SearchButton onClick={handleSearch}>
             <FaSearch size={20} color="#1c1c28" />

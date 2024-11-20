@@ -1,9 +1,8 @@
-// src/components/TelaTreinamentos.js
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaThList, FaUsers, FaChartPie, FaUserCog } from 'react-icons/fa'; // Importa novos ícones
+import { FaSearch, FaThList, FaUsers, FaChartPie, FaUserCog } from 'react-icons/fa';
 import ImagemMascote from '../img/logomoderna.png';
 
 const Container = styled.div`

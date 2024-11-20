@@ -9,10 +9,10 @@ function TelaLogin() {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const navigate = useNavigate(); // Hook para navegação
+    const navigate = useNavigate(); 
 
 
-    // Função para realizar login
+    
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -26,8 +26,8 @@ function TelaLogin() {
         );
         setMessage(response.data.message);
 
-        if (response.data.message === 'Usuário autenticado.') { // Ajuste conforme a resposta do servidor
-            navigate('/colaborador'); // Redireciona para /colaborador após o login
+        if (response.data.message === 'Usuário autenticado.') { 
+            navigate('/colaborador'); // 
         }
         
         } catch (error) {
